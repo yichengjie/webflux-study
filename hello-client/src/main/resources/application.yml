@@ -1,0 +1,27 @@
+spring:
+  # Spring Boot Admin Client 客户端的相关配置
+  boot:
+    admin:
+      client:
+        # 增加客户端开关
+        enabled: true
+        # 设置 Spring Boot Admin Server 地址
+        url: http://localhost:10005/admin
+        instance:
+          prefer-ip: false # 注册实例时，优先使用 IP
+        username: admin
+        password: admin123
+  application:
+    name: SpringBootAdamin-test
+
+management:
+  endpoints:
+    web:
+      # Actuator 提供的 API 接口的根目录。默认为 /actuator
+      base-path: /actuator
+      exposure:
+        # 需要开放的端点,设置 * ，可以开放所有端点。生产环境不建议放开所有 根据项目需求放开即可.
+        include: '*'
+  endpoint:
+    logfile:
+      external-file: ./logs/sys-console.log
