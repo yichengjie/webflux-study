@@ -11,6 +11,7 @@
         <module>hello-world</module>
         <module>hello-admin</module>
         <module>hello-client</module>
+        <module>hello-rxjava</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -130,6 +131,17 @@
                 <version>2.2.0</version>
             </dependency>
 
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>2.2.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.reactivex.rxjava2</groupId>
+                <artifactId>rxjava</artifactId>
+                <version>2.2.21</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
