@@ -3,6 +3,8 @@ package com.yicj.mongo.controller;
 import com.yicj.mongo.handler.CityHandler;
 import com.yicj.mongo.model.City;
 import lombok.extern.slf4j.Slf4j;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -17,7 +19,34 @@ public class CityWebFluxController {
 
     @GetMapping(value = "/{id}")
     public Mono<City> findCityById(@PathVariable("id") Long id) {
-        return cityHandler.findCityById(id);
+        Mono<City> byId = cityHandler.findCityById(id);
+        Subscriber subscriber = new Subscriber<City>() {
+            private Subscription subscription ;
+            @Override
+            public void onSubscribe(Subscription s) {
+                this.subscription = s ;
+                log.info("onSubscribe ....");
+                s.request(1);
+            }
+
+            @Override
+            public void onNext(City city) {
+                log.info("onNext : {}", city);
+                this.subscription.request(1);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                log.error("onError ..", t);
+            }
+
+            @Override
+            public void onComplete() {
+                log.info("onComplete ....");
+            }
+        } ;
+        byId.subscribe(subscriber);
+        return byId ;
     }
 
     @GetMapping()
