@@ -12,6 +12,8 @@
         <module>hello-admin</module>
         <module>hello-client</module>
         <module>hello-rxjava</module>
+        <module>func-study</module>
+        <module>hello-mongo</module>
     </modules>
     <packaging>pom</packaging>
 

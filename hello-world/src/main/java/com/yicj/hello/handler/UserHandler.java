@@ -1,5 +1,8 @@
 package com.yicj.hello.handler;
 
+import com.yicj.hello.dao.UserRepository;
+import com.yicj.hello.model.UserInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -8,6 +11,20 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class UserHandler {
+
+    @Autowired
+    private UserRepository userRepository ;
+
+
+    public Mono<ServerResponse> saveUser(ServerRequest request){
+
+        Mono<UserInfo> mono = request.bodyToMono(UserInfo.class);
+        //Mono<UserInfo> resp = userRepository.saveUser(mono);
+
+        //return ServerResponse.ok().build(resp) ;
+        return null ;
+    }
+
 
     /**
      *  获取用户id
