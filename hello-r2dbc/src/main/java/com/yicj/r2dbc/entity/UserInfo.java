@@ -9,9 +9,6 @@ import java.io.Serializable;
 @Data
 @Table("user")
 public class UserInfo implements Serializable {
-
-    private static final long serialVersionUID = -5644799954031156649L;
-    //value与数据库主键列名一致，若实体类属性名与表主键列名一致可省略value
     @Id
     private Integer id;
     @Column("name")
