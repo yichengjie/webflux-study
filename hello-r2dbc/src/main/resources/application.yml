@@ -1,6 +1,13 @@
 spring:
   r2dbc:
     #url: r2dbcs:mysql://localhost:3306/test?sslMode=DISABLED
-    url: r2dbcs:mysql://127.0.0.1:3306/test
+    url: r2dbcs:mysql://127.0.0.1:3306/test?serverTimezone=GMT%2B8&SSL=false&sslMode=DISABLED
     username: root
     password: root
+    pool:
+      enabled: true
+      max-size: 10
+      initial-size: 10
+      validation-query: select 1
+  jpa:
+    show-sql: true
