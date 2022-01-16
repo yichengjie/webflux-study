@@ -21,16 +21,28 @@ public class UserHandler {
     private UserService userService ;
 
     public Mono<ServerResponse> findList(ServerRequest serverRequest) {
-        log.info("handler findList start");
         Mono<UserInfo> queryMono = serverRequest.bodyToMono(UserInfo.class);
         Flux<UserInfo> userInfoFlux = queryMono.flatMapMany(userInfo -> {
             log.info("准备查询数据库....");
             List<UserInfo> list = userService.findList(userInfo);
             return Flux.fromIterable(list);
         });
-        log.info("handler findList end");
         return ok().contentType(MediaType.APPLICATION_JSON)
                 .body(userInfoFlux, UserInfo.class);
+    }
+
+
+    public Mono<ServerResponse> findList2(ServerRequest serverRequest) {
+        log.info("handler findList start");
+        Mono<UserInfo> queryMono = serverRequest.bodyToMono(UserInfo.class);
+        return queryMono.flatMap(userInfo -> {
+            log.info("准备查询数据库....");
+            List<UserInfo> list = userService.findList(userInfo);
+            Flux<UserInfo> userInfoFlux = Flux.fromIterable(list);
+            log.info("handler findList end");
+            return ok().contentType(MediaType.APPLICATION_JSON)
+                    .body(userInfoFlux , UserInfo.class);
+        });
     }
 
 
