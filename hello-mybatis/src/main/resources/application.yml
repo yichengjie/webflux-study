@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/user_db?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 20
+      maximum-pool-size: 100
+      auto-commit: true
+      idle-timeout: 60000
+      pool-name: HikariCPAdmin
+      max-lifetime: 1800000
+      connection-timeout: 60000
+      connection-init-sql: SELECT 1
+mybatis-plus:
+  mapper-locations: mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
