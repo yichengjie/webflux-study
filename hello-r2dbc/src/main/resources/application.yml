@@ -1,0 +1,6 @@
+spring:
+  r2dbc:
+    #url: r2dbcs:mysql://localhost:3306/test?sslMode=DISABLED
+    url: r2dbcs:mysql://127.0.0.1:3306/test
+    username: root
+    password: root
