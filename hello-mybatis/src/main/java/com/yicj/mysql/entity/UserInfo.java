@@ -9,7 +9,6 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-@Builder
 @TableName(value = "user")//指定表名
 public class UserInfo implements Serializable {
 
