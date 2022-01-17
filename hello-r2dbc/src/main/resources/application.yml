@@ -2,7 +2,7 @@ spring:
   r2dbc:
     #url: r2dbcs:mysql://localhost:3306/test?sslMode=DISABLED
     #url: r2dbcs:mysql://127.0.0.1:3306/test?serverTimezone=GMT%2B8&SSL=false&sslMode=DISABLED
-    url: r2dbcs:mysql://127.0.0.1:3306/test?&SSL=false&sslMode=DISABLED&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: r2dbcs:mysql://127.0.0.1:3306/test?&SSL=false&sslMode=DISABLED&useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     username: root
     password: root
     pool:

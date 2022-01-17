@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,29 +21,32 @@ import java.util.concurrent.TimeUnit;
 public class HelloController {
 
     @GetMapping("sync")
-    public String sync() {
+    public Future<String> sync() throws ExecutionException, InterruptedException {
         log.info("sync method start");
-        String result = this.execute();
+        CompletableFuture<String> execute = this.execute();
         log.info("sync method end");
-        return result;
+        return execute;
     }
 
     @GetMapping("async/mono")
     public Mono<String> asyncMono() {
         log.info("async method start");
-        Mono<String> result = Mono.fromSupplier(this::execute);
+        Mono<String> result = Mono.fromFuture(this::execute);
         log.info("async method end");
         return result;
     }
 
-    private String execute() {
-        log.info("biz execute start....");
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        log.info("biz execute end....");
-        return "hello";
+    private CompletableFuture<String> execute() {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+            log.info("biz execute start....");
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            log.info("biz execute end....");
+            return "hello" ;
+        });
+        return future;
     }
 }
