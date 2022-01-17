@@ -2,11 +2,13 @@ package com.yicj.func;
 
 import com.yicj.func.model.User;
 import com.yicj.func.service.ICalculator;
+import com.yicj.func.service.SayHello;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Slf4j
 public class HelloLambdaTest {
@@ -40,7 +42,21 @@ public class HelloLambdaTest {
 
     @Test
     public void test04(){
-
-
+        Supplier<String> supplier = this.initHelloFuc("张三");
+        String retObj = supplier.get();
+        log.info("retObj : {}", retObj);
     }
+
+
+    public Supplier<String> initHelloFuc(String content){
+        return () -> {
+            SayHello sayHelloFunc = name -> {
+                String prefix = "hello ";
+                String split = " : " ;
+                return  prefix + split + name ;
+            } ;
+            return sayHelloFunc.sayHello(content) ;
+        } ;
+    }
+
 }
