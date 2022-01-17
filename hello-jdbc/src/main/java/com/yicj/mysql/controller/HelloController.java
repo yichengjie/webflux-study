@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class HelloController {
 
     @GetMapping("sync")
-    public Future<String> sync() throws ExecutionException, InterruptedException {
+    public Future<String> sync()  {
         log.info("sync method start");
         CompletableFuture<String> execute = this.execute();
         log.info("sync method end");
