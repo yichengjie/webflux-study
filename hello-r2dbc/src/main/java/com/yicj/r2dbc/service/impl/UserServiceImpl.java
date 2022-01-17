@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
             retObj.setId(userInfo.getId());
             retObj.setName(userInfo.getName());
             retObj.setSex(userInfo.getSex());
+            retObj.setPwd(userInfo.getPwd());
             retObj.setEmail(userInfo.getEmail());
             return retObj ;
         }) ;
