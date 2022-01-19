@@ -1,6 +1,7 @@
 package com.yicj.func;
 
 import cn.hutool.core.util.StrUtil;
+import com.yicj.func.model.StudentScore;
 import com.yicj.func.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -8,12 +9,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @program: webflux-study
@@ -97,6 +97,9 @@ public class FluxTest {
                 Flux.just(4, 7),
                 Flux.just(4, 7))
         .subscribe(value -> log.info("value : {}", value));
+
+        Stream<Integer> stream1 = Stream.of(1, 2);
+        Stream<Integer> stream2 = Stream.of(3, 4);
     }
 
 }
