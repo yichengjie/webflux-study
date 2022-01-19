@@ -1,15 +1,11 @@
 package com.yicj.func;
 
-import cn.hutool.core.util.StrUtil;
-import com.yicj.func.model.StudentScore;
 import com.yicj.func.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,7 +41,6 @@ public class FluxTest {
 
     @Test
     public void reduce(){
-
         List<User> userList = Arrays.asList(
                 User.builder().username("张三").age(11).build(),
                 User.builder().username("李四").age(12).build(),
@@ -54,9 +49,31 @@ public class FluxTest {
         ) ;
 
         Flux<User> userFlux = Flux.fromIterable(userList);
-
-        userFlux.reduce(0, (u1,u2) -> u1) ;
+        userFlux.reduce(0, (Integer u1,User u2) -> {
+                log.info("u1 : {}, u2: {}", u1, u2);
+                return u1 + u2.getAge() ;
+            })
+            .subscribe(value -> log.info("value : {}", value)) ;
     }
+
+    @Test
+    public void reduce2(){
+        List<User> userList = Arrays.asList(
+                User.builder().username("张三").age(11).build(),
+                User.builder().username("李四").age(12).build(),
+                User.builder().username("王五").age(13).build(),
+                User.builder().username("赵六").age(14).build()
+        ) ;
+
+        Flux<User> userFlux = Flux.fromIterable(userList);
+        userFlux.reduce((u1,u2) -> {
+                //log.info("u1 : {}, u2: {}", u1, u2);
+                return User.builder().username("汇总").age(u1.getAge() + u2.getAge()).build() ;
+            })
+            .subscribe(value -> log.info("value : {}", value)) ;
+    }
+
+
 
     @Test
     public void window(){
