@@ -1,13 +1,18 @@
 package com.yicj.func;
 
+import com.yicj.func.model.StudentScore;
 import com.yicj.func.model.User;
+import com.yicj.func.service.StudentScoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -117,6 +122,43 @@ public class FluxTest {
 
         Stream<Integer> stream1 = Stream.of(1, 2);
         Stream<Integer> stream2 = Stream.of(3, 4);
+    }
+
+    @Test
+    public void generate(){
+//        Flux.generate(sink -> {
+//            sink.next("Hello");
+//            sink.complete();
+//        }).subscribe(System.out::println);
+        List<Integer> retList = new ArrayList<>() ;
+        final Random random = new Random();
+        Flux.generate(ArrayList::new, (list, sink) -> {
+            int value = random.nextInt(100);
+            list.add(value);
+            sink.next(value);
+            if (list.size() == 10) {
+                sink.complete();
+            }
+            return list;
+        }).subscribe(System.out::println);
+    }
+
+    @Test
+    public void map(){
+        List<StudentScore> studentList = new StudentScoreService().buildStudentScoreList();
+        Flux<StudentScore> studentFlux = Flux.fromIterable(studentList);
+        //
+        studentFlux.filter(student -> "语文".equals(student.getSubject()))
+                .map(student -> {
+                    User user = new User();
+                    user.setUsername(student.getStuName());
+                    return user ;
+                }).subscribe(user -> {
+                    String userName = user.getUsername() ;
+                    log.info("userName : {}", userName);
+                    log.info("user : {}", user);
+                });
+
     }
 
 }
