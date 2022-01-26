@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.*;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,7 +19,7 @@ import java.util.stream.Stream;
  * @create: 2022-01-26 10:04
  **/
 @Slf4j
-public class SimpleTest {
+public class CompletableFutureSimpleTest {
 
     /**
      * 注意：
