@@ -16,6 +16,7 @@
         <module>hello-mongo</module>
         <module>hello-jdbc</module>
         <module>hello-r2dbc</module>
+        <module>hello-future</module>
     </modules>
     <packaging>pom</packaging>
 
