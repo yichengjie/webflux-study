@@ -39,6 +39,11 @@
             <artifactId>guava</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.scireum</groupId>
+            <artifactId>parsii</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

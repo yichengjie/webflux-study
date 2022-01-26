@@ -159,6 +159,11 @@
                 <version>${spring-boot.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.scireum</groupId>
+                <artifactId>parsii</artifactId>
+                <version>4.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
