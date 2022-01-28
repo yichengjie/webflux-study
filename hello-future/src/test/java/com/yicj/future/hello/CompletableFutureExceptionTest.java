@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
  * @author: yicj1
  * @create: 2022-01-26 18:33
  **/
-public class ExceptionTest {
+public class CompletableFutureExceptionTest {
 
     /**
      * 4月2号时发现内部框架在测试时会超时,检查流程计数器发现计数器有流程未减数,
@@ -22,15 +22,16 @@ public class ExceptionTest {
         CompletableFuture<String> future = new CompletableFuture();
         future.complete(null);//流程中返回的响应null
         future = future.thenCompose((s)-> {
-            //s=null
+            // s=null
             if (true){//模拟问题发生
                 throw new NullPointerException();
             }
             return CompletableFuture.completedFuture(s);//不会执行
         });
-        CompletableFuture.allOf(new CompletableFuture[]{future}).thenRunAsync(()->{
-            System.out.println("allThenRunAsync");//不会执行
-        });
+        CompletableFuture.allOf(new CompletableFuture[]{future})
+            .thenRunAsync(()->{
+                System.out.println("allThenRunAsync");//不会执行
+            }).join();
     }
 
 
@@ -54,8 +55,9 @@ public class ExceptionTest {
         });
         //final String result = future.join();
         //System.out.println(result);
-        CompletableFuture.allOf(new CompletableFuture[]{future}).thenRunAsync(()->{
-            System.out.println("allThenRunAsync");//不会执行
-        });
+        CompletableFuture.allOf(new CompletableFuture[]{future})
+            .thenRunAsync(()->{
+                System.out.println("allThenRunAsync");//不会执行
+            });
     }
 }
