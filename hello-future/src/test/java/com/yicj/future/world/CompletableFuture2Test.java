@@ -80,6 +80,15 @@ public class CompletableFuture2Test {
     }
 
     @Test
+    public void thenApplyNeedReturnCompletionStageTest() {
+        CompletableFuture<String> cf = CompletableFuture.supplyAsync(() -> "---supplyAsync method -> ") ;
+        CompletableFuture<CompletableFuture<String>> cf2 = cf.thenApply((s) -> CompletableFuture.supplyAsync(() -> s + "---theApply method -> "));
+        cf2.thenAccept((c) -> c.thenAccept((f) -> System.out.println(f +  "---thenAccept")));
+        // ForkJoinPool.commonPool-worker-9---supplyAsync method ->
+        // ForkJoinPool.commonPool-worker-9---theApply method -> main---thenAccept
+    }
+
+    @Test
     public void thenAccept() throws ExecutionException, InterruptedException {
         ForkJoinPool pool = new ForkJoinPool() ;
         // 创建异步执行任务
@@ -410,7 +419,7 @@ public class CompletableFuture2Test {
     }
 
     /**
-     * henCompose 可以用于组合多个CompletableFuture，将前一个任务的返回结果作为下一个任务的参数，它们之间存在着业务逻辑上的先后顺序。
+     * thenCompose 可以用于组合多个CompletableFuture，将前一个任务的返回结果作为下一个任务的参数，它们之间存在着业务逻辑上的先后顺序。
      * thenCompose方法会在某个任务执行完成后，将该任务的执行结果作为方法入参然后执行指定的方法，该方法会返回一个新的CompletableFuture实例。
      */
     @Test
