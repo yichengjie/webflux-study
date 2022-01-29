@@ -17,6 +17,7 @@
         <module>hello-jdbc</module>
         <module>hello-r2dbc</module>
         <module>hello-future</module>
+        <module>hello-reactor</module>
     </modules>
     <packaging>pom</packaging>
 
