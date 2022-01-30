@@ -3,9 +3,6 @@ package com.yicj.reactor.hello;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -21,6 +18,7 @@ public class SimpleFluxTest {
             log.info("value : {}", v1);
         }) ;
     }
+
 
     @Test
     public void rollback() throws ExecutionException, InterruptedException {
@@ -68,7 +66,6 @@ public class SimpleFluxTest {
             }
             return "completableFutureC";
         });
-
         //
         CompletableFuture<Void> future = CompletableFuture.allOf(futureA, futureB, futureC);
         log.info("resultA: {}, resultB: {}, resultC: {}", futureA.get(), futureB.get(), futureC.get());
