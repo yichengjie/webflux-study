@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-public class SimpleFulxTest {
+public class SimpleFluxTest {
 
     @Test
     public void test01(){
