@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,19 +30,24 @@ public class FluxTest {
     public void monoZip(){
         Mono<String> first = Mono.just("张三") ;
         Mono<String> second = Mono.just("李四") ;
-
+        Consumer<String> consumer = value ->{
+            log.info("value : " + value);
+        } ;
         Mono<Tuple2<String, String>> zip = Mono.zip(first, second);
-        zip.map(tuple ->{
+        Mono<String> map = zip.map(tuple -> {
             String t1 = tuple.getT1();
             String t2 = tuple.getT2();
-            return t1 + " , " + t2 ;
-        }).subscribe(value ->{
-            log.info("value : " + value);
-        }) ;
+            return t1 + " , " + t2;
+        });
+        map.subscribe(consumer) ;
+        map.subscribe(consumer) ;
         log.info("----------------------------");
         zip.subscribe(value ->{
             log.info("value : " + value);
         }) ;
+
+
+
     }
 
     @Test
