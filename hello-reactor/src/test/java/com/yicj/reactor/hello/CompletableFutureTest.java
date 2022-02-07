@@ -7,7 +7,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
-public class SimpleFluxTest {
+public class CompletableFutureTest {
 
     @Test
     public void test01(){
