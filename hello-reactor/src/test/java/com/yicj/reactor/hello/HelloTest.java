@@ -36,7 +36,7 @@ public class HelloTest {
 
     @Test
     public void publishOn(){
-        Flux<Integer> fluxMap = Flux.range(1, 4)
+        /*Flux<Integer> fluxMap = */Flux.range(1, 4)
                 .map(integer -> {
                     log.info("Map1 number : {}", integer);
                     return integer;
@@ -50,10 +50,10 @@ public class HelloTest {
                         e.printStackTrace();
                     }
                     return integer;
-                });
-        StepVerifier.create(fluxMap)
-                .expectNext(1,2,3,4)
-                .verifyComplete() ;
+                }).blockLast();
+//        StepVerifier.create(fluxMap)
+//                .expectNext(1,2,3,4)
+//                .verifyComplete() ;
 //        fluxMap.subscribe(value ->{
 //
 //        });
