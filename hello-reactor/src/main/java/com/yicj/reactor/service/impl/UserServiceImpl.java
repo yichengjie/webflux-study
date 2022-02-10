@@ -27,13 +27,15 @@ public class UserServiceImpl implements UserService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        List<UserInfo> userInfoList = IntStream.range(1, 10).mapToObj(i -> {
-            UserInfo userInfo = new UserInfo();
-            userInfo.setUsername("username[" + i + "]");
-            userInfo.setAge(10 + i);
-            userInfo.setAddress("address[" + i + "]");
-            return userInfo;
-        }).collect(Collectors.toList());
+        List<UserInfo> userInfoList = IntStream.range(1, 10)
+                .mapToObj(i -> {
+                    UserInfo userInfo = new UserInfo();
+                    userInfo.setUsername("username[" + i + "]");
+                    userInfo.setAge(10 + i);
+                    userInfo.setAddress("address[" + i + "]");
+                    return userInfo;
+                })
+                .collect(Collectors.toList());
         log.info("load all users end. ...");
         return userInfoList;
     }
