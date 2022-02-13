@@ -1,5 +1,6 @@
 package com.yicj.study;
 
+import com.sun.codemodel.internal.JVar;
 import com.yicj.study.model.Pair;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -180,8 +181,9 @@ public class Hello3Test {
     }
 
     @Test
-    public void list1(){
+    public void list1() throws InterruptedException {
         Observable<String> observable = create(sink -> {
+            log.info("init ....");
             TimeUnit.SECONDS.sleep(1);
             sink.onNext("张三");
             TimeUnit.SECONDS.sleep(1);
@@ -191,7 +193,33 @@ public class Hello3Test {
             // 这里onComplete不要漏掉了
             sink.onComplete();
         });
-        observable.subscribe(value -> log.info("value : {}", value));
+        Thread.sleep(3000);
+        //observable.subscribe(value -> log.info("value : {}", value));
     }
 
+    @Test
+    public void fromIterator() throws InterruptedException {
+        //Observable<String> listObservable = fromIterable(listPerson()) ;
+        //Observable<String> arrayObservable = fromArray(arrayPerson());
+        Observable.defer(() -> Observable.fromIterable(listPerson())) ;
+        Thread.sleep(1000);
+    }
+
+    private String [] arrayPerson(){
+        log.info("init array person ....");
+        String [] persons = new String[3] ;
+        persons[0] = "张三" ;
+        persons[1] = "李四" ;
+        persons[2] = "王五" ;
+        return persons;
+    }
+
+    private List<String> listPerson(){
+        List<String> list = new ArrayList<>() ;
+        log.info("init list person ....");
+        list.add("张三") ;
+        list.add("李四") ;
+        list.add("王五") ;
+        return list ;
+    }
 }
