@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -145,5 +146,52 @@ public class Hello3Test {
                 );
     }
 
+    @Test
+    public void blockList(){
+        Observable<String> observable = Observable.defer(() -> Observable.create(sink -> {
+            TimeUnit.SECONDS.sleep(1);
+            sink.onNext("张三");
+            TimeUnit.SECONDS.sleep(1);
+            sink.onNext("李四");
+            TimeUnit.SECONDS.sleep(1);
+            sink.onNext("王五");
+            sink.onComplete();
+        }));
+        //observable.subscribe(value -> log.info("value : {}", value)) ;
+        Single<List<String>> listPerson = observable.toList();
+        List<String> personList = listPerson.blockingGet();
+        log.info("person list : {}", personList);
+    }
+
+    @Test
+    public void blockList2(){
+        Observable<String> observable = Observable.create(sink -> {
+            TimeUnit.SECONDS.sleep(1);
+            sink.onNext("张三");
+            TimeUnit.SECONDS.sleep(1);
+            sink.onNext("李四");
+            TimeUnit.SECONDS.sleep(1);
+            sink.onNext("王五");
+            sink.onComplete();
+        }) ;
+        Single<List<String>> listPerson = observable.toList();
+        List<String> personList = listPerson.blockingGet();
+        log.info("person list : {}", personList);
+    }
+
+    @Test
+    public void list1(){
+        Observable<String> observable = create(sink -> {
+            TimeUnit.SECONDS.sleep(1);
+            sink.onNext("张三");
+            TimeUnit.SECONDS.sleep(1);
+            sink.onNext("李四");
+            TimeUnit.SECONDS.sleep(1);
+            sink.onNext("王五");
+            // 这里onComplete不要漏掉了
+            sink.onComplete();
+        });
+        observable.subscribe(value -> log.info("value : {}", value));
+    }
 
 }
