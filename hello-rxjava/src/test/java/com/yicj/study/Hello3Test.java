@@ -2,8 +2,10 @@ package com.yicj.study;
 
 import com.sun.codemodel.internal.JVar;
 import com.yicj.study.model.Pair;
+import com.yicj.study.model.TicketInfo;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -221,5 +223,66 @@ public class Hello3Test {
         list.add("李四") ;
         list.add("王五") ;
         return list ;
+    }
+
+    @Test
+    public void onErrorReturnList(){
+        Observable.fromIterable(loadTickets())
+                .flatMap(ticketInfo ->
+                        this.rxSendEmail(ticketInfo)
+                                .ignoreElements()
+                                .doOnError(e -> log.error("Failed to send {}", ticketInfo, e))
+                                .toObservable().onErrorReturn(err -> ticketInfo)
+                                .subscribeOn(Schedulers.io())
+
+
+                ) ;
+    }
+
+    @Test
+    public void onErrorReturn() throws InterruptedException {
+        TicketInfo info = new TicketInfo();
+        this.rxSendEmail(info)
+                //.ignoreElements()
+                .doOnError(e -> log.error("Failed to send {}", info, e))
+                /*.toObservable()*/
+                .onErrorReturn(err -> {
+                    log.info("error name ...");
+                    info.setName("error name !!!");
+                    return info ;
+                })
+                .subscribeOn(Schedulers.io())
+                .subscribe(value -> log.info("error value : {}", value));
+
+        Thread.sleep(1000);
+    }
+
+
+
+    private List<TicketInfo> loadTickets(){
+        List<TicketInfo> list = new ArrayList<>() ;
+        TicketInfo tk1 = new TicketInfo() ;
+        int i = 1/0 ;
+        tk1.setName("tkName1");
+        tk1.setAddress("tkAddress1");
+        list.add(tk1) ;
+        //
+        TicketInfo tk2 = new TicketInfo() ;
+        tk2.setName("tkName1");
+        tk2.setAddress("tkAddress1");
+        list.add(tk2) ;
+        //
+        TicketInfo tk3 = new TicketInfo() ;
+        tk3.setName("tkName1");
+        tk3.setAddress("tkAddress1");
+        list.add(tk3) ;
+        return list ;
+    }
+
+    private Observable<TicketInfo> rxSendEmail(TicketInfo ticket){
+        return Observable.create(sink ->{
+            sink.onNext(ticket);
+            sink.onComplete();
+        }) ;
     }
 }
