@@ -8,6 +8,8 @@
     <title>Document</title>
 </head>
 <body>
-    hello world 1111 : ${hello}
+    <p>userResource.name : ${userResource.name}</p>
+    <p>userResource.website : ${userResource.website}</p>
+    <p>userResource.language : ${userResource.language}</p>
 </body>
 </html>
