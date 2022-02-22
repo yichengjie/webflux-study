@@ -3,6 +3,7 @@ package com.yicj.reactor.hello;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.Comparator;
@@ -80,6 +81,13 @@ public class ConcatAndMergeTest {
                 (s,f) -> s + " : " + f
         ).subscribe(System.out::println);
         Thread.sleep(1000* 2l);
+    }
+
+    @Test
+    public void error(){
+        Flux.just(1, 2)
+                .concatWith(Mono.error(new IllegalStateException()))
+                .subscribe(System.out::println, System.err::println);
     }
 
 
