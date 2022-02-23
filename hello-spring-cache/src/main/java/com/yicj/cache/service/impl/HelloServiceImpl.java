@@ -39,7 +39,7 @@ public class HelloServiceImpl implements HelloService {
     }
 
     @Override
-    @Cacheable(value = SpringCacheNamesConstant.USER_INFO_DETAIL_CACHE_NAMES, key = "'user_' + #id ")
+    @Cacheable(value = SpringCacheNamesConstant.USER_INFO_DETAIL_CACHE_NAMES/*, key = "'user_' + #id"*/ ,keyGenerator = "customKeyGenerator")
     public UserInfo findById(String id) {
         UserInfo userInfo = new UserInfo() ;
         try {
