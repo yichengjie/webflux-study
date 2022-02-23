@@ -20,6 +20,7 @@
         <module>hello-reactor</module>
         <module>hello-event-bus</module>
         <module>hello-webmvc</module>
+        <module>hello-spring-cache</module>
     </modules>
     <packaging>pom</packaging>
 
