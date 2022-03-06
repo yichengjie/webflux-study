@@ -4,7 +4,10 @@ package com.yicj.hello.controller;
 import com.yicj.hello.dto.UserAddDTO;
 import com.yicj.hello.dto.UserUpdateDTO;
 import com.yicj.hello.vo.UserVO;
+import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -13,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -49,6 +53,30 @@ public class UserController {
      */
     @PostMapping("/add")
     public Mono<Integer> add(@RequestBody Publisher<UserAddDTO> addDTO){
+        addDTO.subscribe(new Subscriber<UserAddDTO>() {
+            private Subscription subscription ;
+            @Override
+            public void onSubscribe(Subscription subscription) {
+                this.subscription = subscription ;
+                subscription.request(1) ;
+            }
+
+            @Override
+            public void onNext(UserAddDTO userAddDTO) {
+                log.info("====> value : {}", userAddDTO);
+                subscription.request(1);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                log.error("error : ", throwable);
+            }
+
+            @Override
+            public void onComplete() {
+                log.info("on complete !");
+            }
+        });
         // 插入用户记录，返回编号
         Integer returnId = 1 ;
         // 返回用户编号
@@ -63,6 +91,7 @@ public class UserController {
      */
     @PostMapping("/add2")
     public Mono<Integer> add2(Mono<UserAddDTO> addDTO){
+        log.info("====> add dto : {}" , addDTO);
         // 插入用户记录，返回编号
         Integer returnId = UUID.randomUUID().hashCode() ;
         // 返回用户编号
