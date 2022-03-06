@@ -21,6 +21,7 @@
         <module>hello-event-bus</module>
         <module>hello-webmvc</module>
         <module>hello-spring-cache</module>
+        <module>hello-feign</module>
     </modules>
     <packaging>pom</packaging>
 
