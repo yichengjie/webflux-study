@@ -1,8 +1,11 @@
 package com.yicj.hello.controller;
 
 
+import com.yicj.hello.constants.ServiceExceptionEnum;
 import com.yicj.hello.dto.UserAddDTO;
 import com.yicj.hello.dto.UserUpdateDTO;
+import com.yicj.hello.exception.ServiceException;
+import com.yicj.hello.util.CommonResult;
 import com.yicj.hello.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
@@ -53,30 +56,6 @@ public class UserController {
      */
     @PostMapping("/add")
     public Mono<Integer> add(@RequestBody Publisher<UserAddDTO> addDTO){
-        addDTO.subscribe(new Subscriber<UserAddDTO>() {
-            private Subscription subscription ;
-            @Override
-            public void onSubscribe(Subscription subscription) {
-                this.subscription = subscription ;
-                subscription.request(1) ;
-            }
-
-            @Override
-            public void onNext(UserAddDTO userAddDTO) {
-                log.info("====> value : {}", userAddDTO);
-                subscription.request(1);
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                log.error("error : ", throwable);
-            }
-
-            @Override
-            public void onComplete() {
-                log.info("on complete !");
-            }
-        });
         // 插入用户记录，返回编号
         Integer returnId = 1 ;
         // 返回用户编号
@@ -122,5 +101,66 @@ public class UserController {
         Boolean success = false ;
         // 返回是否更新成功
         return Mono.just(success) ;
+    }
+
+
+    /**
+     * 获得指定用户编号的用户
+     *
+     * @param id 用户编号
+     * @return 用户
+     */
+    @GetMapping("/get2")
+    public Mono<CommonResult<UserVO>> get2(@RequestParam("id") Integer id) {
+        // 查询用户
+        UserVO user = new UserVO().setId(id).setUsername("username:" + id);
+        // 返回
+        return Mono.just(CommonResult.success(user));
+    }
+
+    /**
+     * 获得指定用户编号的用户
+     *
+     * @param id 用户编号
+     * @return 用户
+     */
+    @GetMapping("/get3")
+    public UserVO get3(@RequestParam("id") Integer id) {
+        // 查询用户
+        UserVO user = new UserVO().setId(id).setUsername("username:" + id);
+        // 返回
+        return user;
+    }
+
+    /**
+     * 获得指定用户编号的用户
+     *
+     * @param id 用户编号
+     * @return 用户
+     */
+    @GetMapping("/get4")
+    public CommonResult<UserVO> get4(@RequestParam("id") Integer id) {
+        // 查询用户
+        UserVO user = new UserVO().setId(id).setUsername("username:" + id);
+        // 返回
+        return CommonResult.success(user);
+    }
+
+    // UserController.java
+
+    /**
+     * 测试抛出 NullPointerException 异常
+     */
+    @GetMapping("/exception-01")
+    public UserVO exception01() {
+        throw new NullPointerException("没有粗面鱼丸");
+    }
+
+    /**
+     * 测试抛出 ServiceException 异常
+     */
+    @GetMapping("/exception-02")
+    public UserVO exception02() {
+        throw new ServiceException(ServiceExceptionEnum.USER_NOT_FOUND);
     }
 }
