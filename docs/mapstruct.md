@@ -104,3 +104,4 @@
        }
    }
    ```
+6. 文档：https://mapstruct.org/documentation/stable/reference/html
