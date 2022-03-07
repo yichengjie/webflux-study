@@ -2,10 +2,15 @@ package com.yicj.mapstruct.convertor;
 
 import com.yicj.mapstruct.model.bo.UserBO;
 import com.yicj.mapstruct.model.entity.UserDO;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 
+
+@Slf4j
 public class UserBOTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void hello() {
         // 创建 UserDO 对象
         UserDO userDO = new UserDO()
                 .setId(1)
@@ -17,5 +22,4 @@ public class UserBOTest {
         System.out.println(userBO.getUsername());
         System.out.println(userBO.getPassword());
     }
-
 }

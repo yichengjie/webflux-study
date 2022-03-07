@@ -11,5 +11,4 @@ public interface UserConvert {
     UserConvert INSTANCE = Mappers.getMapper(UserConvert.class); // <2>
 
     UserBO convert(UserDO userDO);
-
 }
