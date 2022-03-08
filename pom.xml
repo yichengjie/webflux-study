@@ -23,6 +23,7 @@
         <module>hello-spring-cache</module>
         <module>hello-feign</module>
         <module>mapstruct-study</module>
+        <module>websocket-tomcat</module>
     </modules>
     <packaging>pom</packaging>
 
