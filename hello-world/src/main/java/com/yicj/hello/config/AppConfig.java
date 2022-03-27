@@ -26,6 +26,7 @@ public class AppConfig extends AsyncConfigurerSupport {
         executor.setThreadNamePrefix("AsyncMvc-");
         executor.initialize();
         return executor ;
+        //return new DelegatingSecurityContextExecutor(executor) ;
     }
 
     @Override
