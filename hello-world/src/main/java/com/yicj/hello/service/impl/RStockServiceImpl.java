@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
@@ -39,5 +40,11 @@ public class RStockServiceImpl implements RStockService {
     @Override
     public Future<List<Stock>> getAllStockAsync2() {
         return new AsyncResult<>(getAllStock());
+    }
+
+
+    @Override
+    public CompletableFuture<List<Stock>> getAllStockAsync3() {
+        return CompletableFuture.supplyAsync(this::getAllStock) ;
     }
 }

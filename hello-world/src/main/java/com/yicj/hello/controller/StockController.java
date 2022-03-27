@@ -12,6 +12,7 @@ import org.springframework.web.context.request.async.WebAsyncTask;
 
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ForkJoinPool;
 
 @Controller
@@ -56,6 +57,15 @@ public class StockController {
             return "stocks" ;
         } ;
         return new WebAsyncTask<>(callable) ;
+    }
+
+    @GetMapping("/getStocksCompletableFuture")
+    public CompletableFuture<String> getStocksCompletableFuture(Model model){
+        return stockService.getAllStockAsync3()
+                .thenApplyAsync(list -> {
+                    model.addAttribute("stocks", list) ;
+                    return "stocks" ;
+                }) ;
     }
 
 }

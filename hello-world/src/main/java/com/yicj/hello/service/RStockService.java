@@ -3,6 +3,7 @@ package com.yicj.hello.service;
 import com.yicj.hello.model.Stock;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 public interface RStockService {
@@ -12,4 +13,6 @@ public interface RStockService {
     Future<List<Stock>> getAllStockAsync() ;
 
     Future<List<Stock>> getAllStockAsync2() ;
+
+    CompletableFuture<List<Stock>> getAllStockAsync3() ;
 }
