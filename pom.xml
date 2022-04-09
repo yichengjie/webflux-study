@@ -24,6 +24,7 @@
         <module>hello-feign</module>
         <module>mapstruct-study</module>
         <module>websocket-tomcat</module>
+        <module>hello-kotlin</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -33,6 +34,7 @@
         <java.version>1.8</java.version>
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+        <kotlin.version>1.6.20</kotlin.version>
     </properties>
 
     <dependencyManagement>
@@ -201,6 +203,28 @@
                 <artifactId>javax.annotation-api</artifactId>
                 <version>1.3.2</version>
             </dependency>
+
+
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-jdk8</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-reflect</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-test-junit</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -235,6 +259,11 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-maven-plugin</artifactId>
+                    <version>${kotlin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
