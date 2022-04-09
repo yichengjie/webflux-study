@@ -14,7 +14,6 @@ class HelloController {
 
     @GetMapping("/")
     fun hello(): String{
-        var retValue = helloService.hello("yicj")
-        return retValue
+        return helloService.hello("yicj")
     }
 }
