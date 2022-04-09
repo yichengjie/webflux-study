@@ -26,6 +26,10 @@ public class StockController {
     @GetMapping("/getStocksDeferredResult")
     public DeferredResult<String> getStocksDeferredResult(Model model){
         DeferredResult<String> result = new DeferredResult<>() ;
+
+        result.setResultHandler(result1 -> {
+
+        });
         // 注意这里DeferredResult 需要自己去执行，并设置结果
         ForkJoinPool.commonPool().submit(() ->{
             try {
