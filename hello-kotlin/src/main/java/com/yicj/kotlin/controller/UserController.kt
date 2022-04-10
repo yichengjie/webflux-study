@@ -23,8 +23,8 @@ class UserController {
         //userDO.name = "张三"
         //userDO.age = 20
         log.info("user do : {}", userDO)
-        var name = "yicj"
-        userService.saveUser(name)
-        return "hello" ;
+        var user = UserDO("张三", 20)
+        var vo = userService.saveUser(user)
+        return "hello, ${vo.name}"
     }
 }

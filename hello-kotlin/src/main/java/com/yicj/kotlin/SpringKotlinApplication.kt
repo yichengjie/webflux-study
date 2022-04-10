@@ -12,6 +12,3 @@ open class SpringKotlinApplication
 fun main(args: Array<String>){
     SpringApplication.run(SpringKotlinApplication::class.java, *args)
 }
-
-
-
