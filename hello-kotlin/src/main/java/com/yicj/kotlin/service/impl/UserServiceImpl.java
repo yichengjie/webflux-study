@@ -2,13 +2,14 @@ package com.yicj.kotlin.service.impl;
 
 import com.yicj.kotlin.service.HelloService;
 import com.yicj.kotlin.service.UserService;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
+    private Logger log = LoggerFactory.getLogger(UserServiceImpl.class) ;
 
     @Autowired
     private HelloService helloService ;
@@ -18,4 +19,5 @@ public class UserServiceImpl implements UserService {
         helloService.hello(name) ;
         log.info("保存用户: {} 的信息", name);
     }
+
 }

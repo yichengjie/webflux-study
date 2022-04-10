@@ -2,7 +2,6 @@ package com.yicj.kotlin.controller
 
 import com.yicj.kotlin.model.UserDO
 import com.yicj.kotlin.service.UserService
-import lombok.extern.slf4j.Slf4j
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,9 +19,9 @@ class UserController {
 
     @GetMapping("/hello")
     fun hello(): String{
-        var userDO = UserDO() ;
-        userDO.name = "张三"
-        userDO.age = 20
+        var userDO = UserDO(name = "张三", age = 18)
+        //userDO.name = "张三"
+        //userDO.age = 20
         log.info("user do : {}", userDO)
         var name = "yicj"
         userService.saveUser(name)
