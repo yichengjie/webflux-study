@@ -1,18 +1,44 @@
-package com.yicj.func;
-
-import com.yicj.func.handler.MHSub;
-import com.yicj.func.handler.MHSuper;
-import org.junit.Test;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
-
-/**
- * @program: webflux-study
- * @description:
- * @author: yicj1
- * @create: 2022-04-12 17:00
- **/
+####  MethodHandler的使用
+1. 编写实体父类
+```java
+public class MHSuper {
+    public static int y(Boolean a){
+        System.out.println("super:: static");
+        return 1 ;
+    }
+    public static int z(MHSuper a){
+        System.out.println(a.getClass());
+        return 1 ;
+    }
+    public int x(boolean a){
+        System.out.println("super::primitive");
+        return 1 ;
+    }
+    public int x(Boolean a){
+        System.out.println("super::boxed");
+        return 1 ;
+    }
+}
+```
+2. 编写实体子类
+```java
+public class MHSub extends MHSuper{
+    public static int y(Boolean a){
+        System.out.println("sub::static");
+        return 1 ;
+    }
+    public int x(boolean a){
+        System.out.println("sub::primitive");
+        return 1 ;
+    }
+    public int x(Boolean a){
+        System.out.println("sub::boxed");
+        return 1 ;
+    }
+}
+```
+3. 编写单元测试
+```java
 public class MethodHandlerTest {
     //https://my.oschina.net/u/3847203/blog/2221569
     @Test
@@ -53,3 +79,4 @@ public class MethodHandlerTest {
 
     }
 }
+```
